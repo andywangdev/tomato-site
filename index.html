@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- iPhone-friendly viewport (no pinch zoom + supports notch safe area) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
   <title>For You 💖</title>
 
   <style>
+    html, body {
+      overscroll-behavior: none;
+    }
+
     body {
       background-color: #ffe6e6;
       font-family: Arial, sans-serif;
@@ -13,11 +18,22 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+
+      /* iPhone-friendly height */
+      min-height: 100vh;
+      min-height: 100dvh;
+
       margin: 0;
       text-align: center;
       overflow: hidden;
       position: relative;
+
+      /* Safe area padding for notch/home indicator */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+
+      /* Prevent iOS tap/scroll weirdness */
+      touch-action: manipulation;
     }
 
     h1 {
@@ -35,6 +51,7 @@
       z-index: 2;
       background: rgba(255,255,255,0.75);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border: 1px solid rgba(255,255,255,0.6);
       border-radius: 18px;
       padding: 18px 18px 14px;
@@ -77,6 +94,7 @@
       transition: all 0.25s ease;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .primary {
@@ -127,10 +145,11 @@
     .fall-layer {
       position: absolute;
       inset: 0;
-      pointer-events: none;
+      pointer-events: auto; /* changed from none (iOS friendly) */
       z-index: 0;
       overflow: hidden;
     }
+
     .soft-glow {
       position: absolute;
       inset: -30%;
@@ -150,6 +169,7 @@
       font-weight: 800;
       color: rgba(0,0,0,0.70);
     }
+
     .pill {
       background: rgba(255,255,255,0.75);
       border: 1px solid rgba(255,255,255,0.65);
@@ -165,22 +185,28 @@
     .click-item {
       position: absolute;
       top: -80px;
-      pointer-events: auto; /* IMPORTANT: clickable */
+      pointer-events: auto;
       user-select: none;
       transform: translateY(-120px);
       filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
       will-change: transform;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+
+      /* Bigger tap target on mobile */
+      padding: 10px;
+
       animation-name: fallDown, sway;
       animation-timing-function: linear, ease-in-out;
-      animation-iteration-count: 1, infinite; /* fall once */
+      animation-iteration-count: 1, infinite;
     }
 
     @keyframes fallDown {
       from { transform: translateY(-120px) rotate(0deg); }
-      to   { transform: translateY(calc(100vh + 200px)) rotate(360deg); }
+      to   { transform: translateY(calc(100dvh + 200px)) rotate(360deg); }
     }
+
     @keyframes sway {
       0%,100% { margin-left: 0px; }
       50%     { margin-left: 26px; }
@@ -189,7 +215,7 @@
     /* Toast */
     .toast {
       position: absolute;
-      bottom: 18px;
+      bottom: calc(18px + env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
       z-index: 5;
@@ -203,16 +229,19 @@
       pointer-events: none;
       max-width: min(92vw, 520px);
     }
+
     .toast.show { opacity: 1; }
 
     /* Tiny hearts */
     .heart-pop {
-      position: absolute;
+      position: fixed;
       z-index: 6;
       pointer-events: none;
       animation: pop 650ms ease-out forwards;
       filter: drop-shadow(0 6px 10px rgba(0,0,0,0.08));
+      transform: translate(-50%, -50%);
     }
+
     @keyframes pop {
       0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
       15% { opacity: 1; }
@@ -297,8 +326,6 @@
       el.textContent = "💖";
       el.style.left = x + "px";
       el.style.top = y + "px";
-      el.style.position = "fixed";
-      el.style.transform = "translate(-50%, -50%)";
       el.style.fontSize = (16 + Math.random() * 12) + "px";
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 700);
@@ -346,9 +373,7 @@
       startBtn.disabled = true;
       showToast("Catch 10 tomatoes to unlock the question 🍅😳");
 
-      // spawn faster on mobile too
       spawner = setInterval(spawnDrop, 340);
-      // initial burst
       for (let i = 0; i < 10; i++) spawnDrop();
     }
 
@@ -358,7 +383,6 @@
       spawner = null;
       showToast("Tomato mission complete ✅ Unlocking…", 1500);
 
-      // clear remaining drops
       fallLayer.querySelectorAll(".click-item").forEach(el => el.remove());
 
       setTimeout(() => {
@@ -374,7 +398,6 @@
     }
 
     function spawnDrop() {
-      // still allow a little background vibe even when not running
       const obj = gameRunning ? pickWeighted(dropTable) : { char: "🍅", type: "bg", points: 0 };
       const el = document.createElement("div");
       el.className = "click-item";
@@ -393,15 +416,18 @@
       el.style.animationDelay = `${delay}s, ${(-Math.random() * durSway).toFixed(2)}s`;
 
       if (gameRunning) {
-        el.addEventListener("click", (e) => {
-          // score logic
+        el.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+
           score += obj.points;
           if (obj.type === "tomato") tomatoesCaught += 1;
 
           updateHUD();
-          heartPop(e.clientX, e.clientY);
 
-          // tiny feedback
+          const x = e.clientX ?? (e.touches && e.touches[0]?.clientX) ?? (window.innerWidth / 2);
+          const y = e.clientY ?? (e.touches && e.touches[0]?.clientY) ?? (window.innerHeight / 2);
+          heartPop(x, y);
+
           if (obj.type === "tomato") showToast("+2 🍅 nice!", 650);
           if (obj.type === "gift") showToast("+6 🎁 romantic bonus!", 650);
           if (obj.type === "tree") showToast("-2 🎄 nice try lol", 650);
@@ -409,21 +435,20 @@
           el.remove();
 
           if (tomatoesCaught >= 10) endGameWin();
-        });
+        }, { passive: false });
       }
 
       fallLayer.appendChild(el);
 
-      // remove after it falls
       setTimeout(() => {
         if (el.parentNode) el.remove();
       }, (durFall + 0.7) * 1000);
     }
 
-    // Make background fun even before starting
+    // Background vibe before start
     setInterval(() => { if (!gameRunning) spawnDrop(); }, 600);
 
-    // ---------- Your original YES/NO logic ----------
+    // ---------- YES/NO logic ----------
     let noClickCount = 0;
     const noTexts = [
       "No",
@@ -446,12 +471,12 @@
       const textIndex = Math.min(noClickCount, noTexts.length - 1);
       noBtn.innerText = noTexts[textIndex];
 
-      let currentYesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-      let currentYesPad = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
+      const currentYesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+      const currentYesPad = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
       yesBtn.style.fontSize = (currentYesSize * 1.35) + 'px';
       yesBtn.style.padding = (currentYesPad * 1.25) + 'px ' + (currentYesPad * 2.5) + 'px';
 
-      let currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+      const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
       noBtn.style.fontSize = (currentNoSize * 0.82) + 'px';
 
       if (noClickCount >= 5) noBtn.style.opacity = "0.75";
@@ -468,7 +493,6 @@
 
     function confettiMode() {
       showToast("Entering MAXIMUM TOMATO MODE 🍅🍅🍅", 1200);
-      // temporary faster spawn for chaos
       for (let i = 0; i < 20; i++) spawnDrop();
     }
   </script>
