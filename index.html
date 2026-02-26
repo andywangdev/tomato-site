@@ -1,272 +1,231 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You 💖</title>
+
+  <style>
+    body {
+      background-color: #ffe6e6;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: #ff4d4d;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 6px 18px rgba(255, 77, 77, 0.18);
+    }
+
+    .gif-container img {
+      max-width: 300px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    #yes-btn {
+      background-color: #ff4d4d;
+      color: white;
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+    }
+
+    #yes-btn:hover { background-color: #e60000; }
+
+    #no-btn {
+      background-color: #cccccc;
+      color: #333;
+      font-size: 1rem;
+      padding: 10px 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+    }
+
+    #success-screen { display: none; }
+
+    /* Falling stuff */
+    .fall-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .fall-item {
+      position: absolute;
+      top: -80px;
+      will-change: transform;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
+      animation-name: fallDown, sway;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+    }
+
+    @keyframes fallDown {
+      from { transform: translateY(-120px) rotate(0deg); }
+      to   { transform: translateY(calc(100vh + 180px)) rotate(360deg); }
+    }
+
+    @keyframes sway {
+      0%,100% { margin-left: 0px; }
+      50%     { margin-left: 24px; }
+    }
+
+    .soft-glow {
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.55), transparent 40%),
+        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.45), transparent 45%);
+      z-index: 1;
+      pointer-events: none;
+    }
   </style>
 </head>
+
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;For You 💖&lt;/title&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #ffe6e6; /* Soft pink background */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-family: 'Arial', sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>flex-direction: column;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>justify-content: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>height: 100vh;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>text-align: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>overflow: hidden;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>h1 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: #ff4d4d;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-size: 2.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 2;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>text-shadow: 0 6px 18px rgba(255, 77, 77, 0.18);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.gif-container img {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>max-width: 300px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 15px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 2;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>box-shadow: 0 12px 35px rgba(0,0,0,0.12);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.buttons {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: flex;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>align-items: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>justify-content: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>gap: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: relative;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 2;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>button {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-weight: bold;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>transition: all 0.3s ease;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#yes-btn {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #ff4d4d;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-size: 1.5rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 15px 30px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#yes-btn:hover {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #e60000;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#no-btn {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #cccccc;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: #333;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-size: 1rem;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 10px 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>box-shadow: 0 3px 12px rgba(0,0,0,0.10);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Hidden success screen */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#success-screen {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>display: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* --- Falling stuff layer --- */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.fall-layer {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>inset: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>pointer-events: none; /* clicks go through */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>overflow: hidden;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.fall-item {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>top: -80px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>will-change: transform;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation-name: fallDown, sway;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation-timing-function: linear, ease-in-out;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>animation-iteration-count: infinite, infinite;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes fallDown {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>from { transform: translateY(-120px) rotate(0deg); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>to <span class="Apple-converted-space">  </span>{ transform: translateY(calc(100vh + 180px)) rotate(360deg); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes sway {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>0%,100% { margin-left: 0px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>50% <span class="Apple-converted-space">    </span>{ margin-left: 24px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Optional: soften screen a bit so items look cute */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.soft-glow {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>inset: -30%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.55), transparent 40%),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>radial-gradient(circle at 70% 50%, rgba(255,255,255,0.45), transparent 45%);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 1;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>pointer-events: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Falling tomatoes / gifts / trees --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="fall-layer" id="fallLayer"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="soft-glow"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="question-screen"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="gif-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;img src="https://media.tenor.com/I7KdFaOqqlcAAAAi/milk-and-mocha-bear-couple.gif" alt="Cute pleading bear"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Will you be my girlfriend? 🥺&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="buttons"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button id="yes-btn" onclick="sayYes()"&gt;Yes!&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button id="no-btn" onclick="sayNo()"&gt;No&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="success-screen"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="gif-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Cute hugging bear"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;YAY! I love you! ❤️🥰&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- Your original logic (kept) ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let noClickCount = 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const noTexts = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"No",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"Are you sure? 😢",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"Really really sure?",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"Think again! 😭",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"Don't do this to me!",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"You're breaking my heart 💔",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"I'm gonna cry...",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"Okay, I'll stop asking... JK!",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"PLEASE JUST CLICK YES!"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function sayNo() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>noClickCount++;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const yesBtn = document.getElementById('yes-btn');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const noBtn = document.getElementById('no-btn');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const textIndex = Math.min(noClickCount, noTexts.length - 1);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>noBtn.innerText = noTexts[textIndex];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Make the Yes button bigger</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>let currentYesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>let currentYesPad = parseFloat(window.getComputedStyle(yesBtn).paddingTop);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>yesBtn.style.fontSize = (currentYesSize * 1.4) + 'px';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>yesBtn.style.padding = (currentYesPad * 1.3) + 'px ' + (currentYesPad * 2.6) + 'px';</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Make the No button smaller</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>let currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>noBtn.style.fontSize = (currentNoSize * 0.85) + 'px';</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Bonus: after many "No"s, it becomes extra tiny + cute</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (noClickCount &gt;= 7) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>noBtn.style.opacity = "0.75";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (noClickCount &gt;= 10) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>noBtn.style.opacity = "0.5";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function sayYes() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('question-screen').style.display = 'none';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('success-screen').style.display = 'block';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// --- New: Falling tomatoes, gifts, and Christmas trees ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const fallLayer = document.getElementById("fallLayer");</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// Use emoji so it works instantly (no image hosting needed)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const items = [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "🍅", weight: 6 },<span class="Apple-converted-space">  </span>// MORE tomatoes because she loves them</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "🍅", weight: 6 },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "🍅", weight: 6 },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "🎁", weight: 3 },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "🎄", weight: 3 },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{ char: "✨", weight: 1 }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function pickWeighted(arr) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const total = arr.reduce((s, x) =&gt; s + x.weight, 0);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>let r = Math.random() * total;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>for (const x of arr) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>r -= x.weight;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (r &lt;= 0) return x.char;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>return arr[arr.length - 1].char;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function spawnItem() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const el = document.createElement("div");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.className = "fall-item";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.textContent = pickWeighted(items);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const left = Math.random() * 100; // vw</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const size = 18 + Math.random() * 26; // px</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const durFall = 6 + Math.random() * 7; // seconds</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const durSway = 2.2 + Math.random() * 2.8; // seconds</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const delay = -Math.random() * durFall; // start mid-animation</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.left = left + "vw";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.fontSize = size + "px";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.opacity = (0.25 + Math.random() * 0.55).toFixed(2);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.animationDuration = `${durFall}s, ${durSway}s`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.animationDelay = `${delay}s, ${(-Math.random() * durSway).toFixed(2)}s`;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// slight random rotation feel</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>el.style.transform = `translateY(-120px) rotate(${Math.random()*180}deg)`;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>fallLayer.appendChild(el);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// clean up eventually</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (el &amp;&amp; el.parentNode) el.parentNode.removeChild(el);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}, (durFall + 1) * 1000);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// Spawn a LOT (but keep it smooth)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const START_COUNT = 28; <span class="Apple-converted-space">  </span>// initial “whoa”</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const RATE_MS = 220;<span class="Apple-converted-space">      </span>// continuous</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>for (let i = 0; i &lt; START_COUNT; i++) spawnItem();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>setInterval(spawnItem, RATE_MS);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+  <div class="fall-layer" id="fallLayer"></div>
+  <div class="soft-glow"></div>
+
+  <div id="question-screen">
+    <div class="gif-container">
+      <img src="https://media.tenor.com/I7KdFaOqqlcAAAAi/milk-and-mocha-bear-couple.gif" alt="Cute pleading bear">
+    </div>
+    <h1>Will you be my girlfriend? 🥺</h1>
+    <div class="buttons">
+      <button id="yes-btn" onclick="sayYes()">Yes!</button>
+      <button id="no-btn" onclick="sayNo()">No</button>
+    </div>
+  </div>
+
+  <div id="success-screen">
+    <div class="gif-container">
+      <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Cute hugging bear">
+    </div>
+    <h1>YAY! I love you! ❤️🥰</h1>
+  </div>
+
+  <script>
+    let noClickCount = 0;
+    const noTexts = [
+      "No",
+      "Are you sure? 😢",
+      "Really really sure?",
+      "Think again! 😭",
+      "Don't do this to me!",
+      "You're breaking my heart 💔",
+      "I'm gonna cry...",
+      "Okay, I'll stop asking... JK!",
+      "PLEASE JUST CLICK YES!"
+    ];
+
+    function sayNo() {
+      noClickCount++;
+
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
+
+      const textIndex = Math.min(noClickCount, noTexts.length - 1);
+      noBtn.innerText = noTexts[textIndex];
+
+      let currentYesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+      let currentYesPad = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
+      yesBtn.style.fontSize = (currentYesSize * 1.4) + 'px';
+      yesBtn.style.padding = (currentYesPad * 1.3) + 'px ' + (currentYesPad * 2.6) + 'px';
+
+      let currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+      noBtn.style.fontSize = (currentNoSize * 0.85) + 'px';
+
+      if (noClickCount >= 7) noBtn.style.opacity = "0.75";
+      if (noClickCount >= 10) noBtn.style.opacity = "0.5";
+    }
+
+    function sayYes() {
+      document.getElementById('question-screen').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+    }
+
+    // Falling tomatoes/gifts/trees
+    const fallLayer = document.getElementById("fallLayer");
+    const items = [
+      { char: "🍅", weight: 6 },
+      { char: "🍅", weight: 6 },
+      { char: "🍅", weight: 6 },
+      { char: "🎁", weight: 3 },
+      { char: "🎄", weight: 3 },
+      { char: "✨", weight: 1 }
+    ];
+
+    function pickWeighted(arr) {
+      const total = arr.reduce((s, x) => s + x.weight, 0);
+      let r = Math.random() * total;
+      for (const x of arr) {
+        r -= x.weight;
+        if (r <= 0) return x.char;
+      }
+      return arr[arr.length - 1].char;
+    }
+
+    function spawnItem() {
+      const el = document.createElement("div");
+      el.className = "fall-item";
+      el.textContent = pickWeighted(items);
+
+      const left = Math.random() * 100;
+      const size = 18 + Math.random() * 26;
+      const durFall = 6 + Math.random() * 7;
+      const durSway = 2.2 + Math.random() * 2.8;
+      const delay = -Math.random() * durFall;
+
+      el.style.left = left + "vw";
+      el.style.fontSize = size + "px";
+      el.style.opacity = (0.25 + Math.random() * 0.55).toFixed(2);
+      el.style.animationDuration = `${durFall}s, ${durSway}s`;
+      el.style.animationDelay = `${delay}s, ${(-Math.random() * durSway).toFixed(2)}s`;
+
+      fallLayer.appendChild(el);
+
+      setTimeout(() => {
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      }, (durFall + 1) * 1000);
+    }
+
+    for (let i = 0; i < 28; i++) spawnItem();
+    setInterval(spawnItem, 220);
+  </script>
 </body>
 </html>
